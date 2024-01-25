@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .calculator{
+            margin:  40px auto;
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+        }
+        .input-view{
+            position: relative;
+            padding: 10px;
+            min-height: 35px;
+            border: 1px solid #c2c1c1;
+            margin-bottom: 12px;
+        }
+        .input-view p {
+            text-align: right;
+        }
+        #firstValue {
+            font-size: 14px;
+            color: #050505;
+        }
+        #ope {
+            display: block;
+            font-size: 15px;
+            position: absolute;
+            right: 34px;
+            bottom: 22px;
+        }
+        .btn-wrap{
+
+        }
+        .btn{
+            padding: 2px;
+            margin: 1px;
+            width: calc(100%/7);
+            background-color: #d3d0d0;
+            border: 1px solid;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="input-view">
+            <p id="firstValue"></p>
+            <p id="ope"></p>
+            <p id="secondValue"></p>
+        </div>
+        <div class="btn-wrap">
+            <button class="btn" value="0">0</button>
+            <button class="btn" value="1">1</button>
+            <button class="btn" value="2">2</button>
+            <button class="btn" value="3">3</button>
+            <button class="btn" value="4">4</button>
+            <button class="btn" value="5">5</button>
+            <button class="btn" value="6">6</button>
+            <button class="btn" value="7">7</button>
+            <button class="btn" value="8">8</button>
+            <button class="btn" value="9">9</button>
+            <button class="btn" value="-">-</button>
+            <button class="btn" value="=">=</button>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    // Thêm hàm js
+    let btns = document.getElementsByClassName("btn");
+    for(let btn of  btns){
+        btn.addEventListener('click',btnAction)
+    }
+    // 2 biến giá trị
+    let firstValue = document.getElementById("firstValue")
+    let operator = document.getElementById("ope")
+    let secondValue = document.getElementById("secondValue")
+    // Hàm Calculator
+    function btnAction(event){
+        let btnValue = event.currentTarget.value;
+        let lastValue = parseInt(firstValue.innerText);
+        let currentValue = parseInt(secondValue.innerText);
+        // Nếu bấm vào - hoặc =
+        if (btnValue === "-" || btnValue === "=" ){
+            // Ngăn chặn một số ngoại lệ
+            if (isNaN(currentValue)){
+                return ;
+            }
+            // Hiển thị dấu
+            operator.innerText = "-"
+
+            if (firstValue.innerText === ''){
+                firstValue.innerText = secondValue.innerText
+            } else {
+                firstValue.innerText = lastValue - currentValue;
+            }
+            // Tính xong thì xoá dữ liệu cũ đi
+            secondValue.innerText = null
+        } else {
+            // Hiển thị dữ liệu
+            secondValue.innerText += btnValue;
+        }
+
+    }
+</script>
